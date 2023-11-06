@@ -1,0 +1,36 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f6f7eb;
+}
+#joystick {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    background-color: #2ec0f9;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.stick {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: #67aaf9;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 20px;
+    background-color: #56203d;
+    color: #f6f7eb;
+    border: none;
+    border-radius: 5px;
+}
