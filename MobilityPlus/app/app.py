@@ -1,11 +1,11 @@
 import sys
-sys.path.append('C:\\Users\\rajas\\OneDrive\\Desktop\\MobilityPlus\\app\\libs')
+#sys.path.append('C:\\Users\\rajas\\OneDrive\\Desktop\\MobilityPlus\\app\\libs')
 
 import os
 from fastapi import FastAPI, HTTPException, WebSocket, Response, requests, Request, status, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-import jwt
+#import jwt
 import json
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.responses import JSONResponse
@@ -65,7 +65,7 @@ async def token_post(token: str = Depends(oauth2_scheme)):
         )
 
 # Serve the integrate page
-@app.get("/integrate")
+@app.get("/control")
 async def get_integrate():
     integrate_html_path = os.path.join('templates', 'integrate.html')
     with open(integrate_html_path, 'r') as file:
