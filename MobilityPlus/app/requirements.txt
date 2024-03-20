@@ -3,3 +3,4 @@ uvicorn
 passlib[bcrypt]
 pydantic
 aiohttp
+google-auth
