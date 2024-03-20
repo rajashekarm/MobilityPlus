@@ -1,0 +1,142 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <link rel="stylesheet" type="text/css" href="../static/login.css">-->
+<!--    <meta name="google-signin-client_id" content="992229196542-rmq9dppt06otl5s76qhtuus74e6df472.apps.googleusercontent.com">-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div id="my-signin2"></div>-->
+<!--    <script>-->
+<!--        function onSuccess(googleUser) {-->
+<!--            console.log('Logged in as: ' + googleUser.getBasicProfile().getName());-->
+<!--            var id_token = googleUser.getAuthResponse().id_token;-->
+<!--            console.log("ID Token: " + id_token);-->
+
+<!--            // Send the ID token to the server-->
+<!--            fetch('/token', {-->
+<!--                method: 'POST',-->
+<!--                headers: {-->
+<!--                    'Content-Type': 'application/json'-->
+<!--                },-->
+<!--                body: JSON.stringify({ token: id_token })-->
+<!--            }).then(response => {-->
+<!--                if (response.ok) {-->
+<!--                    // Redirect to integrate.html page-->
+<!--                    window.location.href = "http://localhost:63342/integrate.html";-->
+<!--                } else {-->
+<!--                    console.log('Response failed');-->
+<!--                }-->
+<!--            }).catch((error) => {-->
+<!--                console.error('Error:', error);-->
+<!--            });-->
+<!--        }-->
+<!--        function onFailure(error) {-->
+<!--            console.log(error);-->
+<!--        }-->
+<!--        function renderButton() {-->
+<!--            gapi.signin2.render('my-signin2', {-->
+<!--                'scope': 'profile email',-->
+<!--                'width': 240,-->
+<!--                'height': 50,-->
+<!--                'longtitle': true,-->
+<!--                'theme': 'dark',-->
+<!--                'onsuccess': onSuccess,-->
+<!--                'onfailure': onFailure-->
+<!--            });-->
+<!--        }-->
+<!--    </script>-->
+<!--    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/login.css">
+    <meta name="google-signin-client_id" content="992229196542-rmq9dppt06otl5s76qhtuus74e6df472.apps.googleusercontent.com">
+</head>
+<body>
+    <div class="login-container">
+        <div class="avatar"></div>
+        <img src="/static/avatar.jpeg" alt="Avatar">
+
+        <form method="POST" action="/token">
+            <select id="userType" name="userType">
+                <option value="patient">Patient</option>
+                <option value="nurse">Nurse</option>
+            </select>
+            <input type="text" id="uname" name="uname" placeholder="Email" required>
+            <input type="password" id="psw" name="psw" placeholder="Password" required>
+            <div class="remember-me">
+                <input type="checkbox" id="remember" name="remember">
+                <label for="remember">Remember Me</label>
+            </div>
+            <input type="submit" value="LOGIN">
+        </form>
+
+        <!-- Add this form for account creation -->
+        <form method="POST" action="/create-account">
+            <input type="text" id="name" name="name" placeholder="Name" required>
+            <input type="text" id="uname1" name="uname" placeholder="Username" required>
+            <input type="password" id="psw1" name="psw" placeholder="Password" required>
+            <input type="submit" value="Create Account">
+        </form>
+
+        <div class="options">
+            <a href="#">Forgot Email / Password?</a>
+            <a href="#">Create your Account</a>
+        </div>
+    </div>
+
+    <div id="my-signin2"></div>
+
+    <script>
+    function onSuccess(googleUser) {
+        console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+
+        // Send the ID token to the server
+        fetch('/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ token: id_token })
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Server responded with ' + response.status);
+            }
+        }).then(data => {
+            console.log(data);
+    window.location.href = '/integrate.html';
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+        function onFailure(error) {
+            console.log(error);
+        }
+        function renderButton() {
+            gapi.signin2.render('my-signin2', {
+                'scope': 'profile email',
+                'width': 240,
+                'height': 50,
+                'longtitle': true,
+                'theme': 'dark',
+                'onsuccess': onSuccess,
+                'onfailure': onFailure
+            });
+        }
+    </script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <script src="/static/login.js"></script>
+
+</body>
+</html>

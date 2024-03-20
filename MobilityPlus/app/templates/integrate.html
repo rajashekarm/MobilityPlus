@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MobiPlus - Wheelchair Control Interface</title>
+    <link rel="stylesheet" type="text/css" href="../static/integrate.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.8.2/nipplejs.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="joystick"></div>
+        <div class="voice-controls">
+            <button id="start">Start Voice Control</button>
+            <button id="stop">Stop Voice Control</button>
+        </div>
+
+
+        <div class="movement-controls">
+            <button id="forward">Move Forward</button>
+
+            <div class="horizontal-controls">
+                <button id="left">Turn Left</button>
+                <button id="break" class="emergency-stop">Emergency Stop</button>
+                <button id="right">Turn Right</button>
+            </div>
+
+            <button id="backward">Move Backward</button>
+        </div>
+    </div>
+    <script src="../static/integrate.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,66 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f6f7eb;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#joystick {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    background-color: #2ec0f9;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.voice-controls, .movement-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.movement-controls button, .voice-controls button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #56203d;
+    color: #f6f7eb;
+    border: none;
+    border-radius: 5px;
+}
+
+.horizontal-controls {
+    display: flex;
+    justify-content: center;
+}
+
+#break {
+    margin: 0 20px;
+}
+
+/* ... rest of the CSS remains unchanged ... */
+
+.emergency-stop {
+    padding: 10px;
+    width: 60px; /* Adjust the size as needed */
+    height: 60px; /* Adjust the size as needed */
+    line-height: 40px; /* Adjust the line height to vertically center the text */
+    border-radius: 50%; /* This will make it round */
+    background-color: #ff4136; /* A distinct color for the emergency button */
+    color: #ffffff;
+    font-weight: bold;
+    margin: 0 15px; /* Adjust the spacing around the button */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds a shadow for better visibility */
+}
+
+/* ... rest of the CSS remains unchanged ... */

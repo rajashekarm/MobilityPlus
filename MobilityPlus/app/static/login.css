@@ -1,0 +1,63 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Aligns content to the top */
+    height: 100vh;
+    padding: 20px; /* Add some space around the edges */
+    box-sizing: border-box;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+#my-signin2 {
+    margin-bottom: 30px;
+    order: 1;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 40px;
+    background-color: #fff;
+    width: 60%; /* Adjust the width as needed */
+    box-sizing: border-box;
+    order: 2;
+}
+
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+form input[type="text"], form input[type="password"] {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+form input[type="submit"] {
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 30px;
+}
