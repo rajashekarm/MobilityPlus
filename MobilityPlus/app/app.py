@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 static_dir = os.path.join(BASE_DIR, 'static')
 
 # Use the absolute path for the 'static' directory
-app.mount("/static", StaticFiles(directory=static_dir), name="static"))
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 
 # Secrets should be stored securely, not hardcoded
