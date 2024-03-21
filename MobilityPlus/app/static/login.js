@@ -72,11 +72,18 @@ var initClient = function() {
  */
 var onSuccess = function(user) {
     console.log('Signed in as ' + user.getBasicProfile().getName());
- };
+    // Send the ID token to your server
+    sendIdTokenToServer(user.getAuthResponse().id_token);
+};
 
 /**
  * Handle sign-in failures.
  */
 var onFailure = function(error) {
-    console.log(error);
+    console.error(error);
+    // Handle `popup_closed_by_user` error
+    if (error.error === 'popup_closed_by_user') {
+        // You can notify the user or log this event for debugging purposes
+        console.log('The sign-in popup was closed by the user.');
+    }
 };
