@@ -24,7 +24,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 ALGORITHM = 'HS256'
 
 # Define the OAuth2PasswordBearer instance
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/token")
 
 # Serve the login page as the root page
 @app.get("/", response_class=HTMLResponse)
@@ -44,14 +44,14 @@ async def get_login():
 async def token_post(token: str = Depends(oauth2_scheme)):
     try:
         # Verify the token using Google's verifier
-        idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_SECRET)
+        idinfo = jwt.decode(token, CLIENT_SECRET, algorithms=["RS256"])
 
         if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
             raise ValueError('Wrong issuer.')
 
         # Token is valid, redirect to the control page
-        return RedirectResponse(url='/control', status_code=status.HTTP_303_SEE_OTHER)
-    except ValueError:
+        return JSONResponse(content={"message": "Token is valid"}, status_code=status.HTTP_200_OK)
+    except jwt.JWTError:
         # Invalid token
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
