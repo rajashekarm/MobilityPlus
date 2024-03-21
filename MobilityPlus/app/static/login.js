@@ -17,7 +17,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
         })
     }).then(function(response) {
         if (response.ok) {
-            window.location.href = '/protected';
+            window.location.href = '/control';
         } else {
             alert('Invalid username, password, or user type');
         }
@@ -36,7 +36,7 @@ function sendIdTokenToServer(idToken) {
         })
     }).then(function(response) {
         if (response.ok) {
-            window.location.href = '/protected';
+            window.location.href = '/control';
         } else {
             alert('Failed to sign in');
         }
