@@ -9,6 +9,9 @@ import json
 import jwt
 from pydantic import ValidationError
 
+from voice_recognition import recognize_speech
+from motor_control import handle_motor_command, cleanup
+
 # FastAPI app instance
 app = FastAPI()
 
@@ -70,57 +73,39 @@ async def get_control():
     except FileNotFoundError:
         return JSONResponse(status_code=404, content={"detail": "Control page not found"})
 
-# WebSocket endpoint
+# WebSocket endpoint for receiving commands from UI
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    token = websocket.query_params.get("token")
-    if not token:
-        await websocket.send_text("Unauthorized access. Please login.")
-        await websocket.close()
-        return
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
-            raise credentials_exception
-        token_scopes = payload.get("scopes", [])
-        token_data = TokenData(scopes=token_scopes, username=username)
-    except (jwt.JWTError, ValidationError):
-        raise credentials_exception
-    user = await load_user(token_data.username)
-    if user is None:
-        raise credentials_exception
-    for scope in security_scopes.scopes:
-        if scope not in token_data.scopes:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Not enough permissions",
-                headers={"WWW-Authenticate": "Bearer"},
-            )
     while True:
         data = await websocket.receive_text()
-        print(f"Received message: {data}")
+        await handle_command(data)
 
-        # Parse the message as JSON
+# Handle different types of commands (joystick, voice, button)
+async def handle_command(data: str):
+    try:
         message = json.loads(data)
-
-        # Handle different types of messages
-        if message['type'] == 'joystick':
-            # Handle joystick data
-            direction = message['direction']
-            force = message['force']
-            # ... your code here ...
-        elif message['type'] == 'voice':
-            # Handle voice command
-            command = message['command']
-            # ... your code here ...
-        elif message['type'] == 'button':
-            # Handle button command
-            command = message['command']
-            # ... your code here ...
+        message_type = message.get('type')
+        if message_type == 'joystick':
+            direction = message.get('direction')
+            force = message.get('force')
+            # Handle joystick data (implement your logic)
+        elif message_type == 'voice':
+            voice_command = message.get('command')
+            if voice_command:
+                await handle_motor_command(voice_command)
+        elif message_type == 'button':
+            button_command = message.get('command')
+            # Handle button command (implement your logic)
         else:
-            print(f"Unknown message type: {message['type']}")
+            print(f"Unknown message type: {message_type}")
+    except json.JSONDecodeError:
+        print("Invalid JSON format")
+
+# Clean up resources when stopping the server
+@app.on_event("shutdown")
+async def shutdown_event():
+    cleanup()
 
 
 # Exception handler for HTTP errors
